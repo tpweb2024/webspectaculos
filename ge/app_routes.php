@@ -1,5 +1,8 @@
 <?php
-include_once 'app/control/ge_control.php';
+    include_once 'app/controllers/eventcontroller.php';
+    include_once 'app/controllers/ge_control.php';
+    include_once 'app/controllers/tipoeventcontroller.php';
+
 // app_routes ----------------------
 
 //include "config/router_config.php";
@@ -18,6 +21,12 @@ class AppRoutes {
         'login' => "login",
         'logout' => "logout",
         'logusr' => "logUsr",
+        'listar' => "listar",
+        'agregar' => "agregar",
+        'eliminar' => "eliminar",
+        'listartipo' => "listartipo",
+        'agregartipo' => "agregartipo",
+        'eliminartipo' => "eliminartipo",
     ];
 }
 
