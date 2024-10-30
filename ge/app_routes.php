@@ -23,6 +23,8 @@ class AppRoutes {
         'logusr' => "logUsr",
         'listar' => "listar",
         'agregar' => "agregar",
+        'actualizar' => 'actualizar',
+        'modificar' => 'modificar', 
         'eliminar' => "eliminar",
         'listartipo' => "listartipo",
         'agregartipo' => "agregartipo",

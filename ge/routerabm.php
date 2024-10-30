@@ -1,5 +1,6 @@
 <?php
   include_once 'app/controllers/eventcontroller.php';
+  include_once 'app/controllers/ge_control.php';  
   include_once 'app/controllers/tipoeventcontroller.php';
   
 //define('BASE_URL', '//'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']).'/');
@@ -8,7 +9,7 @@
 //agregar  ->  addEvento()
 //eliminar  ->  removeEvento()
 
-$action='listar';
+$action='alta';
 
 if (!empty($_GET["action"])){
 	$action=$_GET["action"];}
@@ -18,18 +19,33 @@ if (!empty($_GET["action"])){
 $params=explode("/",$action);
 
     switch ($params[0]){
+		case 'home':
+			$controller = new AppController();
+			$controller->home(); 
+			break;	 
 		case 'listar':
 			$controller = new EventController();
 			$controller->showEvent(); 
+			break;	
+		case 'alta':
+			$controller = new EventController();
+			$controller->altaEvent();
+			//addEvent();
 			break;	 
 		case 'agregar':
 			$controller = new EventController();
 			$controller->addEvent();
 			addEvent();
 			break;
-		case 'eliminar':
+		case 'actualizar':
 			$controller = new EventController();
-			$controller->UpdateEvent($params[1]);
+			$controller->saveEvent($params[1]);
+			saveEvent($params[1]);
+			break;				
+		case 'modificar':
+			$controller = new EventController();
+			$controller->updateEvent($params[1]);
+			updateEvent();
 			break;	
 		case 'eliminar':
 			$controller = new EventController();

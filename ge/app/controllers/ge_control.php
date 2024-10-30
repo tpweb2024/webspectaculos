@@ -193,31 +193,43 @@ function crud(){
 
 //-----------------ABM
 
-function agregar(){
-    $appcontroller = new EventController();
-    $appcontroller->addEvent(); 
-    addEvent();
+//function agregar(){
+//    $appcontroller = new EventController();
+ //   $appcontroller->addEvent(); 
+  //  addEvent();
+//}
+
+//function actualizar(){
+  //  $appcontroller = new EventController();
+    //$appcontroller->saveEvent($params[1]); 
+   // saveEvent($params[1]);
+//}
+
+function modificar($id){
+   $appcontroller = new EventController();
+  $appcontroller->updateEvent()($id); 
+ updateEvent($id);
 }
 
-function eliminar($id){
-    echo 'llego hasta aca';
-    $appcontroller = new EventController();
-    $appcontroller->deleteEvent($id);
-    deleteEvent($id);
-}
+//function eliminar($id){
+ //   echo 'llego hasta aca';
+  //  $appcontroller = new EventController();
+   // $appcontroller->deleteEvent($id);
+  //  deleteEvent($id);
+//}
 
-function listartipo(){
-    $appcontroller = new TipoEventController();
-    $appcontroller->listartipo(); 
-}
+//function listartipo(){
+//    $appcontroller = new TipoEventController();
+ //   $appcontroller->listartipo(); 
+//}
 
-function agregartipo(){
-    $appcontroller = new TipoEventController();
-    $appcontroller->addTipoEvent();
-    addTipoEvent();
-}
+//function agregartipo(){
+ //   $appcontroller = new TipoEventController();
+  //  $appcontroller->addTipoEvent();
+   // addTipoEvent();
+//}
 
-function eliminartipo(){
-    $appcontroller = new TipoEventController();
-    $appcontroller->deleteTipoEvent($params[0]); 
-}
+//function eliminartipo(){
+ //   $appcontroller = new TipoEventController();
+  //  $appcontroller->deleteTipoEvent($params[0]); 
+//}

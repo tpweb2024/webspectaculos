@@ -27,17 +27,30 @@ Class EventModel {
         return $events;
     }
 
-    public function getEventUpdate($id){
+    public function getEventUpdate($ident){
 
         // 1.- abro la conexion
-        $db = $this->connect();
+       $db = $this->connect();
 
         // 2.- Enviar la consulta ( 2 sub pasos: prepare y ejecute)
+   
+        $query = $db->prepare("SELECT * FROM evento WHERE id = ?");
+        $query->execute(array($ident));
+        $event = $query->fetch();
 
-        $query = $db->prepare('SELECT * FROM evento WHERE id = ?');
-        $query->execute();
         return $event;
+  
     }
+
+
+    function saveModelEvent($iden, $nombre, $descripcion, $fecha, $tipo){
+        // 1.- abro la conexion
+        echo $nombre;
+           $db = $this->connect();
+        // 2.- enviar la consulta (sub pasos, prepara y ejecuta)
+        $query = $this->db->prepare('UPDATE evento SET(nombre, descripcion, fecha, tipo) WHERE id = $iden');
+        $query->execute([$id]);
+       }
 
         /**
         * Inserta la tarea en la base de datos
@@ -50,7 +63,6 @@ Class EventModel {
         $query->execute([$nombre, $descripcion, $fecha, $tipo]);
      // 3.- Obtengo y devuelvo el ID de la tarea nueva
         return $db->lastInsertID();
-
     }
 
     function removeEvent($id){

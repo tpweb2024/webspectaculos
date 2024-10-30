@@ -1,8 +1,9 @@
-<!-- formulario de alta de tarea -->
+{include file="header1.tpl"}
 <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-4">
-<form action="agregar" method="POST" class="my-4">
+<form action={"agregar"} method="POST" class="my-4">
+<h3 align="center"> ALTA DE EVENTOS</h3>
 	<div class="row">
 		<div class="col-9">
 			<div class="form-group">
@@ -40,9 +41,4 @@
     </div>
 	</div>
 	<div class="container-fluid bg-light overflow-hidden my-5 px-lg-0"></div>
-
-
-
-
-
-
+{include file="footer1.tpl"}
