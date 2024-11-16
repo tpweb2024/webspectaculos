@@ -1,0 +1,20 @@
+<?php require_once 'templates/header.phtml';
+?>
+<h3 align='center'>Modificacion de Tipo de Eventos</h3>
+<div class='container-xxl py-5'>
+    <div class='container'>
+    <div class='row g-4'>
+        <ul class='list-group mt-5'>
+            <?php foreach($tipoevents as $tipoevent): ?>
+                <li class='list-group-item'>
+                    <a href="editartipo/<?=$tipoevent->id?>">EDITAR  |</a><a href="eliminartipo/<?=$tipoevent->id?>">ELIMINAR  |</a><?=$tipoevent->nombre ?>
+                </li>
+            <?php endforeach?>
+        </ul>
+    </div>
+    </div>
+</div>
+
+<?php
+require_once 'templates/footer.phtml';
+

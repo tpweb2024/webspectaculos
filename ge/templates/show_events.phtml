@@ -1,0 +1,19 @@
+<?php require_once 'templates/header.phtml';
+?>
+<h3 align='center'>Eventos</h3>
+   <div class='container-xxl py-5'>
+     <div class='container'>
+       <div class='row g-4'>
+           <ul class='list-group mt-5'>
+                <?php foreach($events as $event): ?>
+                    <p><li class='list-group-item'>
+                        <a><strong>Nombre |</strong></a><?=$event->nombre ?> <a><strong>Descripcion |</strong></a><?=$event->descripcion ?>
+                   </li></p>                 
+              <?php endforeach?>
+        </div>
+     </div>
+  </div>
+  <?php
+require_once 'templates/footer.phtml';
+
+

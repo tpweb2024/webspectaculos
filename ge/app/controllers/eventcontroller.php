@@ -4,98 +4,76 @@ include_once 'app/views/eventview.php';
 
 class EventController {
 
-    private $modelABM;
-    private $viewABM;
+    private $model;
+    private $view;
 
-    function _construct(){
-        $this->modelABM = new EventModel();
-        $this->viewABM = new EventView();
+    function __construct($res){
+      $this->model = new EventModel();
+      $this->view = new EventView($res->user);
+  }    
+
+ //   function __construct(){
+ //       $this->model = new EventModel();
+ //       $this->view = new EventView();
+ //   }
+
+// -----INICIO
+function Home(){
+  $this->view->Home();              
+}
+
+// -----MUESTRA LOS EVENTOS
+    function showEvents(){
+      $events = $this->model->getAll();
+      $this->view->showEvents($events);              
     }
-
-    /**
-     * *Imprime la lista de tareas
-     */
-
-
-
-  function altaEvent(){
-
-      // obtiene las tareas del modelo
-       $this->_construct();
-       $event = $this->modelABM->getEvent();
-       
-      // actualizo la vista
-       $this->viewABM->altaEvent();              
-   }
-
-    function showEvent(){
-
-       // obtiene las tareas del modelo
-        $this->_construct();
-        $events = $this->modelABM->getEvent();
-        
-       // actualizo la vista
-        $this->viewABM->showEvent($events);              
-    }
-
+// -----GENERA FORMULARIO PARA DAR EL ALTA
+    function ShowAltaEvent(){
+        $events = $this->model->getAll();
+        $tipos = $this->model->getAllTipo();
+        $this->view->showAlta($events, $tipos);              
+      }
+// -----REALIZA EL ALTA
     function addEvent(){
-
-        //TODO: validacion de datos
-        $this->_construct();
-        //obtengo los datos del usuario
-          $nombre = $_POST['nombre'];
-          $descripcion = $_POST['descripcion'];
-          $fecha = $_POST['fecha'];
-          $tipo = $_POST['tipo'];
-      
-        // veridico campos obligatorio
-        if (empty($nombre) || empty($descripcion)){
-          $this->view->showError('Faltan datos obligatorios');
-        }
-        //inserto la atrea en la DB
-          $id = $this->modelABM->insertEvent($nombre, $descripcion, $fecha, $tipo);
-      
-          //redirijimos al listado
-          header("Location: " . BASE_URL);
-          altaEvent();
-        }
-
-    function saveEvent($id){
-
-      $this->_construct();
-      //obtengo los datos del usuario
         $nombre = $_POST['nombre'];
         $descripcion = $_POST['descripcion'];
         $fecha = $_POST['fecha'];
-        $tipo = $_POST['tipo'];
-
-        // obtiene las tareas del modelo
-        $this->_construct();
-        $this->modelABM->saveModelEvent($id,$nombre,$descripcion,$fecha, $tipo);
-        
-        }    
-
-
-    function updateEvent($id){
-
-         $this->_construct();
-
-         $event = $this->modelABM->getEventUpdate($id);
-
-         //obtengo los datos del usuario
-
-         $this->viewABM->updateViewEvent($event); 
-         
-
+        $tipo = $_POST['tipo'];          
+        if (empty($nombre) || empty($descripcion)){
+            $this->view->showError('Faltan datos obligatorios');
+             die();
+           } 
+        $id = $this->model->insert($nombre, $descripcion, $fecha, $tipo);
         header("Location: " . BASE_URL);
-      }        
-
-  function deleteEvent($id){
-      $this->_construct();
-      $this->modelABM->removeEvent($id);
-      $this->showEvent();
-      //header('Location: ' . BASE_URL);
+     }  
+// -----MUESTRA LOS EVENTOS A EDITAR Y ELIMINAR  
+    function showEvents1(){
+      $events = $this->model->getAll();
+      $this->view->showEventsUpdate($events);            
+  }
+// -----MUESTRA EL EVENTO HA MODIFICAR EVENTOS
+    function editEvent($id){
+        $event = $this->model->get($id);
+        $tipos = $this->model->getAllTipo();        
+        $this->view->updateViewEvent($event,$tipos);
+    }
+// -----REALIZA LA ACTUALIZACION DEL EVENTO
+    function updateEvent($id){
+      $nombre = $_POST['nombre'];
+      $descripcion = $_POST['descripcion'];
+      $fecha = $_POST['fecha'];
+      $tipo = $_POST['tipo'];  
+      if (empty($nombre) || empty($descripcion)){
+        $this->view->showError('Faltan datos obligatorios');
+        die();
+        }
+      $id = $this->model->insertupdate($id, $nombre, $descripcion, $fecha, $tipo);
+      header("Location: " . BASE_URL);
+     }
+// -----ELIMINA EL EVENTO     
+    function deleteEvent($id){
+      $this->model->remove($id);
+      header('Location: ' . BASE_URL);
       }
-      
+        
 }
-

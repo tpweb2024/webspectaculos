@@ -4,52 +4,61 @@ include_once 'app/views/tipoeventview.php';
 
 class TipoEventController {
 
-  private $model;
-  private $view;
+    private $model;
+    private $view;
 
-  function _construct(){
-      $this->model = new TipoEventModel();
-      $this->view = new TipoEventView();
-  }
-
-  /**
-   * *Imprime la lista de tareas
-   */
-
-  function showTipoEvent(){
-
-     // obtiene las tareas del modelo
-      $this->_construct();
-      $event = $this->model->getTipoEvent();
-      
-     // actualizo la vista
-      $this->view->showTipoEvent($event);              
-  }
-
-  function addTipoEvent(){
-
-      //TODO: validacion de datos
-      $this->_construct();
-      //obtengo los datos del usuario
-        $nombre = $_POST['nombre'];
-        $id = $_POST['id'];
-
-      // veridico campos obligatorio
-      if (empty($nombre) || empty($id)){
-        $this->view->showTipoError('Faltan datos obligatorios');
-        die();
+    function __construct($res){
+        $this->model = new TipoEventModel();
+        $this->view = new TipoEventView($res->user);
+    }
+// -----MUESTRA LOS EVENTOS
+    function showTipoEvents(){
+      $events = $this->model->getAll();
+      $this->view->showTipoEvents($events);              
+    }
+// -----GENERA FORMLARIO PARA DAR EL ALTA
+    function ShowAltaTipoEvent(){
+        $tipoevents = $this->model->getAll();
+        $this->view->showTipoAlta($tipoevents);              
       }
-      //inserto la atrea en la DB
-        $id = $this->model->insertTipoEvent($nombre, $id);
-    
-        //redirijimos al listado
+// -----REALIZA EL ALTA
+    function addTipoEvent(){
+        $nombre = $_POST['nombre']; 
+        if (empty($nombre)){
+            $this->view->showError('Faltan datos obligatorios');
+             die();
+           } 
+        $id = $this->model->insert($nombre);
         header("Location: " . BASE_URL);
-      }
-
-  function deleteTipoEvent($id){
-      $this->_construct();
-      $this->model->removeTipoEvent($id);
+     }  
+// -----MUESTRA LOS EVENTOS A EDITAR Y ELIMINAR  
+    function showTipoEvents1(){
+      $tipoevents = $this->model->getAll();
+      $this->view->showTipoEventsUpdate($tipoevents);            
+  }
+// -----MUESTRA EL EVENTO HA MODIFICAR EVENTOS
+    function editTipoEvent($id){
+        $tipoevent = $this->model->get($id);      
+        $this->view->updateViewTipoEvent($tipoevent);
+    }
+// -----REALIZA LA ACTUALIZACION DEL EVENTO
+    function updateTipoEvent($id){
+      $nombre = $_POST['nombre'];
+      if (empty($nombre)){
+        $this->view->showError('Faltan datos obligatorios');
+        die();
+        }
+      $id = $this->model->insertupdate($id, $nombre);
+      header("Location: " . BASE_URL);
+     }
+// -----ELIMINA EL EVENTO     
+    function deleteTipoEvent($id){
+      $this->model->remove($id);
       header('Location: ' . BASE_URL);
       }
-    
+         
+
 }
+
+
+

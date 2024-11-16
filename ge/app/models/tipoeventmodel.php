@@ -2,49 +2,40 @@
 
 Class TipoEventModel {
 
-    //abre la conexion a la base de datos    
+    private $db;
 
-    private function connect(){
-        $db = new PDO('mysql:host=localhost;dbname=g27_db_webspectaculos;charset=utf8', 'root', '');
-        return $db;
-    }
+    public function __construct() {
+       $this->db = new PDO('mysql:host=localhost;dbname=g27_db_webspectaculos;charset=utf8', 'root', '');
+   }
 
-    //devuelve todas las tareas de la base de datos
-
-    public function getTipoEvent(){
-
-        // 1.- abro la conexion
-        $db = $this->connect();
-
-        // 2.- Enviar la consulta ( 2 sub pasos: prepare y ejecute)
-
-        $query = $db->prepare('SELECT * FROM tipoevento');
+    public function getAll(){
+        $query = $this->db->prepare('SELECT * FROM tipoevento');
         $query->execute();
-
-        // 3.- Obtengo la respuesta con un fetchAll (porque son muchos)
-
-        $tipoevents = $query->fetchAll(PDO::FETCH_OBJ);  //arreglo de tareas
+        $tipoevents = $query->fetchAll(PDO::FETCH_OBJ);  
         return $tipoevents;
-    }
+    }    
 
-        /**
-        * Inserta la tarea en la base de datos
-        */
-    function insertTipoEvent($id, $nombre){
-     // 1.- abro la conexion
-        $db = $this->connect();
-     // 2.- enviar la consulta (sub pasos, prepara y ejecuta)
-        $query = $db->prepare('INSERT INTO tipoevento (nombre, id) VALUES(?,?)');
-        $query->execute([$id, $nombre]);
-     // 3.- Obtengo y devuelvo el ID de la tarea nueva
-        return $db->lastInsertID();
-
-    }
-
-    function removeTipoEvent($id){
-        $db = $this->connect();
-        $query = $db->prepare ('DELETE FROM tipoevento WHERE id = ?');
+    function get($id){
+        $query = $this->db->prepare('SELECT * FROM tipoevento WHERE id = ?');
         $query->execute([$id]);
+        $event = $query->fetch(PDO::FETCH_OBJ);
+        return $event; 
     }
-    
+
+    function insert($nombre){
+             $query = $this->db->prepare('INSERT INTO tipoevento (nombre) VALUES(?)');
+             $query->execute([$nombre]);
+             return $this->db->lastInsertID();
+         }    
+
+    function insertupdate($id, $nombre){
+            $query = $this->db->prepare('UPDATE tipoevento SET nombre=? WHERE id = ?');
+            $query->execute([$nombre, $id]);
+            return $id;
+       }
+
+    function remove($id){
+        $query = $this->db->prepare ('DELETE FROM tipoevento WHERE id = ?');
+        $query->execute([$id]);
+    }       
 }

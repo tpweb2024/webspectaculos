@@ -1,0 +1,20 @@
+<?php require_once 'templates/header.phtml';
+?>
+<h3 align='center'>Modificacion de Eventos</h3>
+<div class='container-xxl py-5'>
+    <div class='container'>
+    <div class='row g-4'>
+        <ul class='list-group mt-5'>
+            <?php foreach($events as $event): ?>
+                <li class='list-group-item'>
+                    <a href="editar/<?=$event->id?>">EDITAR  |</a><a href="eliminar/<?=$event->id?>">ELIMINAR  |</a><?=$event->nombre ?>
+                </li>
+            <?php endforeach?>
+        </ul>
+    </div>
+    </div>
+</div>
+
+<?php
+require_once 'templates/footer.phtml';
+
